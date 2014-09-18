@@ -27,6 +27,11 @@
             return this.set;
         }
 
+        public T Find(object id)
+        {
+            return this.set.Find(id);
+        }
+
         public void Add(T entity)
         {
             this.ChangeEntityState(entity, EntityState.Added);

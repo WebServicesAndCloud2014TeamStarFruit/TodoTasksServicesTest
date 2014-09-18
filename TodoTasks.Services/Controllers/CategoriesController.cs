@@ -38,15 +38,13 @@
                 .Categories
                 .All()
                 .Where(c => c.UserId == userId)
-                .Project()
-                    .To<CategoryModel>()
-                    .FirstOrDefault();
+                .Select(CategoryModel.FromCategory);
 
             return Ok(categories);
         }
 
         [HttpGet]
-        public IHttpActionResult ById(Guid id)
+        public IHttpActionResult ById(int id)
         {
             var userId = User.Identity.GetUserId();
             var category = this.data
@@ -54,9 +52,8 @@
                 .All()
                 .Where(c => c.UserId == userId)
                 .Where(c => c.Id == id)
-                .Project()
-                    .To<CategoryModel>()
-                    .FirstOrDefault();
+                .Select(CategoryModel.FromCategory)
+                .FirstOrDefault();
 
             if (category == null)
             {
@@ -70,22 +67,25 @@
         public IHttpActionResult Create(CategoryModel category)
         {
             var userId = User.Identity.GetUserId();
-            var newCategory = new Category { Name = category.Name, UserId = userId };
+            var newCategory = new Category 
+            {
+                Name = category.Name,
+                UserId = userId
+            };
             this.data.Categories.Add(newCategory);
             this.data.SaveChanges();
 
             var categoryDataModel =
                 this.data.Categories.All()
                     .Where(c => c.Id == newCategory.Id)
-                    .Project()
-                    .To<CategoryModel>()
+                    .Select(CategoryModel.FromCategory)
                     .FirstOrDefault();
 
             return this.Ok(categoryDataModel);
         }
 
         [HttpPut]
-        public IHttpActionResult Update(Guid id, CategoryModel category)
+        public IHttpActionResult Update(int id, CategoryModel category)
         {
             if (!this.ModelState.IsValid)
             {
@@ -106,7 +106,7 @@
         }
 
         [HttpDelete]
-        public IHttpActionResult Delete(Guid id)
+        public IHttpActionResult Delete(int id)
         {
             var existingCategory = this.data.Categories.All().FirstOrDefault(c => c.Id == id);
             if (existingCategory == null)

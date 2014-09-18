@@ -39,6 +39,14 @@
             }
         }
 
+        public IRepository<ApplicationUser> Users
+        {
+            get
+            {
+                return this.GetRepository<ApplicationUser>();
+            }
+        }
+
         public void SaveChanges()
         {
             this.context.SaveChanges();

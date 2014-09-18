@@ -17,6 +17,8 @@ namespace TodoTasks.Services
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
+            // Web API routes
+            config.MapHttpAttributeRoutes();
             config.EnableCors();
             //config.AddODataQueryFilter();
 
@@ -25,10 +27,6 @@ namespace TodoTasks.Services
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-
-            config.Formatters.JsonFormatter.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.None;
-            config.Formatters.Remove(config.Formatters.XmlFormatter);
-
         }
     }
 }
