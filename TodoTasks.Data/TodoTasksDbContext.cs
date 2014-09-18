@@ -2,17 +2,17 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.Entity;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.EntityFramework;
-    using Microsoft.AspNet.Identity.Owin;
-    using TodoTasks.Models;
-    using System.Data.Entity;
-    using TodoTasks.Data.Migrations;
 
-    public class TodoTasksDbContext : IdentityDbContext<ApplicationUser>, ITodoTasksDbContext
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using TodoTasks.Models;
+    using TodoTasks.Data.Migrations;
+    
+
+    public class TodoTasksDbContext : IdentityDbContext<TodoTasksUser>, ITodoTasksDbContext
     {
         public TodoTasksDbContext()
             : base("TodoTasks", throwIfV1Schema: false)
@@ -24,6 +24,7 @@
         {
             return new TodoTasksDbContext();
         }
+
 
         public virtual IDbSet<TodoTask> Tasks { get; set; }
 

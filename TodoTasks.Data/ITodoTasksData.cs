@@ -9,8 +9,6 @@
 
         IRepository<Category> Categories { get; }
 
-        IRepository<ApplicationUser> Users { get; }
-
         void SaveChanges();
     }
 }

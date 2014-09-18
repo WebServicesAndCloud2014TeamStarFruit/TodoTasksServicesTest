@@ -5,7 +5,7 @@ namespace TodoTasks.Data.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    public sealed class Configuration : DbMigrationsConfiguration<TodoTasks.Data.TodoTasksDbContext>
+    public sealed class Configuration : DbMigrationsConfiguration<TodoTasksDbContext>
     {
         public Configuration()
         {

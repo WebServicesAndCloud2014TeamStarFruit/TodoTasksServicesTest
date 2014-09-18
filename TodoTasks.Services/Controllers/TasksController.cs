@@ -38,7 +38,9 @@
                 .Tasks
                 .All()
                 .Where(t => t.Category.UserId == userId)
-                .Select(TaskModel.FromTask);
+                .Project()
+                    .To<TaskModel>()
+                    .FirstOrDefault();
 
             return Ok(tasks);
         }
@@ -52,8 +54,9 @@
                 .All()
                 .Where(t => t.Category.UserId == userId)
                 .Where(t => t.Id == id)
-                .Select(TaskModel.FromTask)
-                .FirstOrDefault();
+                .Project()
+                    .To<TaskModel>()
+                    .FirstOrDefault();
 
             if (task == null)
             {
@@ -86,7 +89,8 @@
             var taskDataModel =
                 this.data.Tasks.All()
                     .Where(c => c.Id == newTask.Id)
-                    .Select(TaskModel.FromTask)
+                    .Project()
+                    .To<TaskModel>()
                     .FirstOrDefault();
 
             return this.Ok(taskDataModel);
